@@ -284,6 +284,11 @@
             try {
                 showStatus('Loading configuration...', 'info');
                 
+                // Check if StoryGrammarLoader is available
+                if (typeof StoryGrammarLoader === 'undefined') {
+                    throw new Error('StoryGrammarLoader library not loaded. Please check the script tag.');
+                }
+                
                 // Load the JSON configuration
                 const response = await fetch('rpg-character.json');
                 if (!response.ok) {
@@ -306,6 +311,10 @@
             } catch (error) {
                 console.error('Initialization error:', error);
                 showStatus(`❌ Error: ${error.message}`, 'error');
+                
+                // Additional debugging info
+                console.log('Available globals:', Object.keys(window).filter(k => k.includes('Story') || k.includes('Grammar')));
+                console.log('StoryGrammarLoader available:', typeof StoryGrammarLoader !== 'undefined');
             }
         }
         

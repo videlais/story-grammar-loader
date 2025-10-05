@@ -14,6 +14,8 @@
   "scripts": {
     "build": "tsc",
     "build:webpack": "webpack",
+    "build:standalone": "webpack --config webpack.standalone.config.js",
+    "build:docs": "npm run build:standalone && cp dist/story-grammar-loader-standalone.js docs/story-grammar-loader.js && cp examples/rpg-character.json docs/",
     "dev": "tsc --watch",
     "test": "NODE_OPTIONS='--experimental-vm-modules' jest",
     "test:watch": "NODE_OPTIONS='--experimental-vm-modules' jest --watch",
@@ -22,7 +24,7 @@
     "lint:fix": "eslint src/**/*.ts --fix",
     "clean": "rimraf dist types",
     "prepublishOnly": "npm run clean && npm run build",
-    "all": "npm run clean && npm run build && npm run build:webpack && npm test"
+    "all": "npm run clean && npm run build && npm run build:webpack && npm run build:standalone && npm test"
   },
   "repository": {
     "type": "git",

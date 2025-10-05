@@ -5,7 +5,7 @@ This folder contains the GitHub Pages demo for the Story Grammar Loader project.
 ## Files
 
 - **`index.html`** - Interactive web demo with character generator
-- **`story-grammar-loader.js`** - Webpack UMD bundle of the library
+- **`story-grammar-loader.js`** - Standalone webpack UMD bundle (includes all dependencies)
 - **`rpg-character.json`** - RPG character configuration file
 
 ## Features
@@ -41,9 +41,14 @@ The demo uses `rpg-character.json` which defines:
 To update the demo:
 
 1. Make changes to the source code
-2. Run `npm run build:webpack` to rebuild the bundle
-3. Copy the new `dist/story-grammar-loader.js` to this folder
-4. Update the JSON configuration as needed
+2. Run `npm run build:docs` to rebuild and update the demo bundle
+3. Update the JSON configuration as needed
+
+The `build:docs` script automatically:
+
+- Builds the standalone webpack bundle (includes all dependencies)
+- Copies the bundle to the docs folder
+- Updates the JSON configuration
 
 ## GitHub Pages
 

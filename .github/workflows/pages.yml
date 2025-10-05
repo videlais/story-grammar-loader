@@ -27,9 +27,7 @@ jobs:
       run: npm run all
       
     - name: Update docs with latest build
-      run: |
-        cp dist/story-grammar-loader.js docs/
-        cp examples/rpg-character.json docs/
+      run: npm run build:docs
       
     - name: Deploy to GitHub Pages
       if: github.ref == 'refs/heads/main'
