@@ -4,13 +4,13 @@ A TypeScript library that provides a JSON-based interface for defining [Story Gr
 
 ## Features
 
-- 🎯 **JSON Configuration**: Define all rule types using simple JSON syntax
-- 🔥 **Keyword Support**: Use intuitive keywords like `if`, `then`, `values`, `weights`
-- 🎲 **All Rule Types**: Support for static, weighted, conditional, sequential, range, template, and function rules
-- 🛠️ **TypeScript**: Full TypeScript support with comprehensive type definitions
-- 🧪 **Well Tested**: Comprehensive test suite with Jest
-- 📦 **Zero Config**: Works out of the box with sensible defaults
-- 🔧 **Extensible**: Register custom functions and modifiers
+- 🎯 **JSON Configuration**: Define all rule types using simple JSON syntax.
+- 🔥 **Keyword Support**: Use intuitive keywords like `if`, `then`, `values`, `weights`.
+- 🎲 **All Rule Types**: Support for static, weighted, conditional, sequential, range, template, and function rules.
+- 🛠️ **TypeScript**: Full TypeScript support with comprehensive type definitions.
+- 🧪 **Well Tested**: Comprehensive test suite with Jest.
+- 📦 **Zero Config**: Works out of the box with sensible defaults.
+- 🔧 **Extensible**: Register custom functions and modifiers.
 
 ## 🎮 Interactive Demo
 
