@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Grammar Loader - Interactive Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .controls {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .output-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .output-section h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .story-output {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 60px;
+            margin: 15px 0;
+            font-size: 1.1em;
+            line-height: 1.6;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .story-output.has-content {
+            border-color: #667eea;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.1);
+        }
+        
+        .story-output:empty::before {
+            content: "Click 'Generate Character Story' to create your first story...";
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            text-align: center;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .json-preview {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 15px 0;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            margin: 15px 0;
+        }
+        
+        .success {
+            background: #d1e7dd;
+            color: #0f5132;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #badbcc;
+            margin: 15px 0;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            border-top: 1px solid #e9ecef;
+            margin-top: 30px;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎲 Story Grammar Loader</h1>
+            <p>Interactive RPG Character Generator</p>
+        </div>
+        
+        <div class="content">
+            <div class="controls">
+                <h3><span class="emoji">🎮</span>Controls</h3>
+                <div class="button-group">
+                    <button id="generateBtn" onclick="generateStory()">Generate Character Story</button>
+                    <button id="generateMultipleBtn" onclick="generateMultipleStories()">Generate 5 Stories</button>
+                    <button id="showStatsBtn" onclick="showIndividualStats()">Show Individual Stats</button>
+                    <button id="showConfigBtn" onclick="toggleJsonConfig()">Toggle JSON Config</button>
+                </div>
+            </div>
+            
+            <div class="output-section">
+                <h3><span class="emoji">📖</span>Generated Stories</h3>
+                <div id="storyOutput" class="story-output"></div>
+                <div id="multipleStories" style="display: none;"></div>
+            </div>
+            
+            <div class="output-section" id="statsSection" style="display: none;">
+                <h3><span class="emoji">🎯</span>Individual Character Components</h3>
+                <div id="statsGrid" class="stats-grid"></div>
+            </div>
+            
+            <div class="output-section" id="configSection" style="display: none;">
+                <h3><span class="emoji">⚙️</span>JSON Configuration</h3>
+                <div id="jsonPreview" class="json-preview"></div>
+            </div>
+            
+            <div id="statusMessage"></div>
+        </div>
+        
+        <div class="footer">
+            <p>
+                Powered by <a href="https://github.com/videlais/story-grammar" target="_blank">Story Grammar</a> 
+                | <a href="https://github.com/videlais/story-grammar-loader" target="_blank">View Source</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Load the webpack bundle -->
+    <script src="story-grammar-loader.js"></script>
+    
+    <script>
+        // Global variables
+        let grammarLoader = null;
+        let jsonConfig = null;
+        let isConfigVisible = false;
+        
+        // Initialize the application
+        async function initApp() {
+            try {
+                showStatus('Loading configuration...', 'info');
+                
+                // Load the JSON configuration
+                const response = await fetch('rpg-character.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to load configuration: ${response.statusText}`);
+                }
+                jsonConfig = await response.json();
+                
+                // Initialize the Story Grammar Loader
+                grammarLoader = new StoryGrammarLoader.JSONGrammarLoader();
+                await grammarLoader.loadFromConfig(jsonConfig);
+                
+                showStatus('✅ Configuration loaded successfully!', 'success');
+                
+                // Enable buttons
+                document.getElementById('generateBtn').disabled = false;
+                document.getElementById('generateMultipleBtn').disabled = false;
+                document.getElementById('showStatsBtn').disabled = false;
+                document.getElementById('showConfigBtn').disabled = false;
+                
+            } catch (error) {
+                console.error('Initialization error:', error);
+                showStatus(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Generate a single character story
+        async function generateStory() {
+            if (!grammarLoader) return;
+            
+            try {
+                const story = await grammarLoader.generateText('story_intro');
+                const output = document.getElementById('storyOutput');
+                output.textContent = story;
+                output.classList.add('has-content');
+                
+                // Hide multiple stories when showing single story
+                document.getElementById('multipleStories').style.display = 'none';
+            } catch (error) {
+                showStatus(`❌ Generation error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Generate multiple character stories
+        async function generateMultipleStories() {
+            if (!grammarLoader) return;
+            
+            try {
+                const stories = [];
+                for (let i = 0; i < 5; i++) {
+                    const story = await grammarLoader.generateText('story_intro');
+                    stories.push(`${i + 1}. ${story}`);
+                }
+                
+                const multipleOutput = document.getElementById('multipleStories');
+                multipleOutput.innerHTML = stories.map(story => 
+                    `<div class="story-output has-content">${story}</div>`
+                ).join('');
+                multipleOutput.style.display = 'block';
+                
+                // Clear single story output
+                const singleOutput = document.getElementById('storyOutput');
+                singleOutput.textContent = '';
+                singleOutput.classList.remove('has-content');
+                
+            } catch (error) {
+                showStatus(`❌ Generation error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Show individual character statistics
+        async function showIndividualStats() {
+            if (!grammarLoader) return;
+            
+            try {
+                const stats = {};
+                const statRules = ['character_name', 'character_class', 'character_level', 'item_rarity', 'day_cycle', 'random_gold', 'dice_roll'];
+                
+                for (const rule of statRules) {
+                    stats[rule] = await grammarLoader.generateText(rule);
+                }
+                
+                const statsGrid = document.getElementById('statsGrid');
+                statsGrid.innerHTML = Object.entries(stats).map(([key, value]) => {
+                    const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    return `
+                        <div class="stat-card">
+                            <div class="stat-label">${label}</div>
+                            <div class="stat-value">${value}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                document.getElementById('statsSection').style.display = 'block';
+                
+            } catch (error) {
+                showStatus(`❌ Stats generation error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Toggle JSON configuration display
+        function toggleJsonConfig() {
+            const configSection = document.getElementById('configSection');
+            const jsonPreview = document.getElementById('jsonPreview');
+            
+            isConfigVisible = !isConfigVisible;
+            
+            if (isConfigVisible) {
+                jsonPreview.textContent = JSON.stringify(jsonConfig, null, 2);
+                configSection.style.display = 'block';
+                document.getElementById('showConfigBtn').textContent = 'Hide JSON Config';
+            } else {
+                configSection.style.display = 'none';
+                document.getElementById('showConfigBtn').textContent = 'Show JSON Config';
+            }
+        }
+        
+        // Show status messages
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.className = type;
+            statusDiv.textContent = message;
+            
+            // Auto-hide success messages after 3 seconds
+            if (type === 'success') {
+                setTimeout(() => {
+                    statusDiv.textContent = '';
+                    statusDiv.className = '';
+                }, 3000);
+            }
+        }
+        
+        // Initialize buttons as disabled
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('generateBtn').disabled = true;
+            document.getElementById('generateMultipleBtn').disabled = true;
+            document.getElementById('showStatsBtn').disabled = true;
+            document.getElementById('showConfigBtn').disabled = true;
+            
+            // Initialize the app
+            initApp();
+        });
+        
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                generateStory();
+            } else if (e.key === 'Enter' && e.shiftKey) {
+                generateMultipleStories();
+            }
+        });
+    </script>
+</body>
+</html>

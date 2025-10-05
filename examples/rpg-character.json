@@ -1,0 +1,89 @@
+{
+  "rules": {
+    "character_class": {
+      "type": "static",
+      "values": ["warrior", "mage", "rogue", "cleric"]
+    },
+    
+    "weapon": {
+      "type": "conditional",
+      "conditions": [
+        {
+          "if": "context.character_class === 'warrior'",
+          "then": ["sword", "axe", "hammer", "spear"]
+        },
+        {
+          "if": "context.character_class === 'mage'",
+          "then": ["staff", "wand", "orb", "tome"]
+        },
+        {
+          "if": "context.character_class === 'rogue'",
+          "then": ["dagger", "bow", "throwing knives", "shortsword"]
+        },
+        {
+          "default": ["mace", "holy symbol", "shield"]
+        }
+      ]
+    },
+    
+    "item_rarity": {
+      "type": "weighted",
+      "values": ["common", "uncommon", "rare", "epic", "legendary"],
+      "weights": [0.50, 0.30, 0.15, 0.04, 0.01]
+    },
+    
+    "character_level": {
+      "type": "range",
+      "min": 1,
+      "max": 20,
+      "numberType": "integer"
+    },
+    
+    "character_name": {
+      "type": "template",
+      "template": "%first_name% %title% %last_name%",
+      "variables": {
+        "first_name": ["Aldric", "Brina", "Caius", "Diana", "Edmund"],
+        "title": ["the Brave", "the Wise", "the Swift", "the Strong", "the Cunning"],
+        "last_name": ["Ironforge", "Stormwind", "Shadowmere", "Brightblade", "Goldleaf"]
+      }
+    },
+    
+    "day_cycle": {
+      "type": "sequential",
+      "values": ["dawn", "morning", "noon", "afternoon", "evening", "night"],
+      "cycle": true
+    },
+    
+    "random_gold": {
+      "type": "function",
+      "functionName": "randomNumber",
+      "parameters": {
+        "min": 10,
+        "max": 1000
+      }
+    },
+    
+    "dice_roll": {
+      "type": "function", 
+      "functionName": "diceRoll",
+      "parameters": {
+        "sides": 20,
+        "count": 1
+      }
+    },
+    
+    "story_intro": {
+      "type": "static",
+      "values": [
+        "At %character_name%, a level %character_level% %character_class%, draws their %item_rarity% %weapon% as %day_cycle% approaches.",
+        "The %character_class% %character_name% (Level %character_level%) discovers a %item_rarity% %weapon% during %day_cycle%.",
+        "As %day_cycle% falls, %character_name%, the %character_class%, finds %random_gold% gold pieces and a %item_rarity% %weapon%."
+      ]
+    }
+  },
+  
+  "settings": {
+    "maxDepth": 100
+  }
+}

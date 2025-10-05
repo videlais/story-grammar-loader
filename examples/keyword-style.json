@@ -1,0 +1,51 @@
+{
+  "rules": {
+    "colors": ["red", "blue", "green", "yellow", "purple", "orange"],
+    
+    "weather": {
+      "values": ["sunny", "cloudy", "rainy", "stormy", "foggy"],
+      "weights": [0.4, 0.3, 0.2, 0.05, 0.05]
+    },
+    
+    "mood": {
+      "if": "context.weather === 'sunny'",
+      "then": ["happy", "cheerful", "energetic"],
+      "else": ["calm", "contemplative", "cozy"]
+    },
+    
+    "temperature": {
+      "min": 15,
+      "max": 35,
+      "type": "integer"
+    },
+    
+    "greeting": {
+      "template": "Good %time_of_day%! It's a %weather% day with %temperature%°C.",
+      "variables": {
+        "time_of_day": ["morning", "afternoon", "evening"]
+      }
+    },
+    
+    "days_of_week": {
+      "sequence": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "cycle": true
+    },
+    
+    "random_fact": {
+      "function": "randomChoice",
+      "parameters": {
+        "choices": [
+          "Did you know octopi have three hearts?",
+          "Honey never spoils!",
+          "A group of flamingos is called a flamboyance.",
+          "Bananas are berries, but strawberries aren't!",
+          "There are more possible games of chess than atoms in the observable universe."
+        ]
+      }
+    }
+  },
+  
+  "settings": {
+    "maxDepth": 50
+  }
+}
