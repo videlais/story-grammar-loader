@@ -319,11 +319,11 @@
         }
         
         // Generate a single character story
-        async function generateStory() {
+        function generateStory() {
             if (!grammarLoader) return;
             
             try {
-                const story = await grammarLoader.generateText('story_intro');
+                const story = grammarLoader.parse('%story_intro%');
                 const output = document.getElementById('storyOutput');
                 output.textContent = story;
                 output.classList.add('has-content');
@@ -336,13 +336,13 @@
         }
         
         // Generate multiple character stories
-        async function generateMultipleStories() {
+        function generateMultipleStories() {
             if (!grammarLoader) return;
             
             try {
                 const stories = [];
                 for (let i = 0; i < 5; i++) {
-                    const story = await grammarLoader.generateText('story_intro');
+                    const story = grammarLoader.parse('%story_intro%');
                     stories.push(`${i + 1}. ${story}`);
                 }
                 
@@ -363,7 +363,7 @@
         }
         
         // Show individual character statistics
-        async function showIndividualStats() {
+        function showIndividualStats() {
             if (!grammarLoader) return;
             
             try {
@@ -371,7 +371,7 @@
                 const statRules = ['character_name', 'character_class', 'character_level', 'item_rarity', 'day_cycle', 'random_gold', 'dice_roll'];
                 
                 for (const rule of statRules) {
-                    stats[rule] = await grammarLoader.generateText(rule);
+                    stats[rule] = grammarLoader.parse(`%${rule}%`);
                 }
                 
                 const statsGrid = document.getElementById('statsGrid');

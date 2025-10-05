@@ -76,9 +76,11 @@
     "story_intro": {
       "type": "static",
       "values": [
-        "At %character_name%, a level %character_level% %character_class%, draws their %item_rarity% %weapon% as %day_cycle% approaches.",
+        "As %day_cycle% approaches, %character_name%, a level %character_level% %character_class%, draws their %item_rarity% %weapon%.",
         "The %character_class% %character_name% (Level %character_level%) discovers a %item_rarity% %weapon% during %day_cycle%.",
-        "As %day_cycle% falls, %character_name%, the %character_class%, finds %random_gold% gold pieces and a %item_rarity% %weapon%."
+        "As %day_cycle% falls, %character_name%, the %character_class%, finds %random_gold% gold pieces and a %item_rarity% %weapon%.",
+        "At %day_cycle%, %character_name% the %character_class% (Level %character_level%) wields a %item_rarity% %weapon%.",
+        "During %day_cycle%, %character_name%, a %character_class%, acquires %random_gold% gold and a %item_rarity% %weapon%."
       ]
     }
   },
