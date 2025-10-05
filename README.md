@@ -126,6 +126,7 @@ Simple arrays of values:
 ```
 
 **Keyword syntax:**
+
 ```json
 {
   "colors": ["red", "blue", "green"]
@@ -147,6 +148,7 @@ Probability-based selection:
 ```
 
 **Keyword syntax:**
+
 ```json
 {
   "rarity": {
@@ -182,6 +184,7 @@ Context-aware selection:
 ```
 
 **Keyword syntax:**
+
 ```json
 {
   "weapon": {
@@ -207,6 +210,7 @@ Ordered progression through values:
 ```
 
 **Keyword syntax:**
+
 ```json
 {
   "days": {
@@ -233,6 +237,7 @@ Numeric value generation:
 ```
 
 **Keyword syntax:**
+
 ```json
 {
   "level": {
@@ -262,6 +267,7 @@ Structured text with embedded variables:
 ```
 
 **Keyword syntax:**
+
 ```json
 {
   "character": {
@@ -293,6 +299,7 @@ Dynamic generation using predefined functions:
 ```
 
 **Keyword syntax:**
+
 ```json
 {
   "dice": {
